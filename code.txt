@@ -1,0 +1,27 @@
+exercice7
+
+installer git sur instance 
+créer un dossier 
+créer un fichier 
+on y place le script bash ci-dessous
+Le script doit vérifier si le fichier server.conf existe, sinon le télécharger avec git
+Journaliser l'exécution du fichier 
+tester avec tail -f pour voir en temps réel les logs
+1. mkdir dossier 
+2. touch fichier.sh
+3. #!/bin/bash
+CONF_FILE="/path/to/server.conf" choisir un path pour votre ficher server.conf
+4. GITHUB_URL="https://raw.githubusercontent.com/your-username/your-repo/main/server.conf" on copier le chemin url github
+5. LOG_FILE="server_check.log"
+6. if [ -f "$CONF_FILE" ]; then
+    echo "$(date '+%Y-%m-%d %H:%M:%S') - server.conf exists" >> "$LOG_FILE"
+else
+    # Télécharger le fichier depuis GitHub
+    curl -o "$CONF_FILE" "$GITHUB_URL"
+    
+    if [ $? -eq 0 ]; then
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - server.conf downloaded successfully" >> "$LOG_FILE"
+    else
+        echo "$(date '+%Y-%m-%d %H:%M:%S') - Failed to download server.conf" >> "$LOG_FILE"
+    fi
+fi
